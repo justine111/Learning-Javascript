@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crud Operation javascript</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Crud Operation using javascript</h1>
+    <div class="container">
+        <div class="left">
+            <form id="form">
+                <label for="post">Write your TODO Today.</label>
+                <br><br>
+                <div id="msg"></div>
+                <textarea name="post" id="input" cols="30" rows="10"></textarea>
+                <br><br>
+                <button type="submit" id="btn">Add</button>
+            </form>  
+        </div>
+
+        <div class="right">
+            <h3>Your TODO</h3>
+            <div id="posts"></div>
+        </div>
+
+        <div id="posts">
+    
+        </div>
+    </div>
+
+<script>
+    //for validayion
+    let form = document.getElementById("form");
+    let input = document.getElementById("input");
+    let msg = document.getElementById("msg");
+    let posts = document.getElementById("posts");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log("button clicked");
+
+        formValidation();
+    });
+
+    let formValidation = () => {
+        if (input.value === "") {
+            msg.innerHTML = "Please Input text";
+            console.log("kailangan mag input text");
+        } else {
+            console.log("success");
+            msg.innerHTML = "";
+            acceptData();
+        }
+    };
+
+    //for data insert
+    let data = {};
+    let acceptData = () => {
+        data["text"] = input.value;
+        console.log(data);
+        createPost();
+    };
+
+    //post the data
+    let createPost = () => {
+        posts.innerHTML += `
+        <div>
+            <p>${data.text}</p>
+            <span class="options">
+                <i onClick="editPost(this)" class="fas fa-edit"></i>
+                <i onClick="deletePost(this)" class="fas fa-trash-alt"></i>
+            </span>
+        </div>
+        `;
+        input.value = "";
+    };
+
+    //delete post
+    let deletePost = (e) => {
+        e.parentElement.parentElement.remove();
+    };
+    
+    //edit post
+    let editPost = (e) => {
+        input.value = e.parentElement.previousElementSibling.innerHTML;
+        e.parentElement.parentElement.remove();
+    };
+</script>
+</body>
+</html>
